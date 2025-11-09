@@ -13,7 +13,16 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix --cache",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "superbase:init": "npx supabase init",
+    "superbase:login": "npx supabase login",
+    "supabase:link": "npx supabase link --project-ref $VITE_SUPABASE_PROJECT_REF",
+    "superbase:start": "npx supabase start",
+    "migration:make": "supabase migration new",
+    "db:migrate": "supabase db push && npm run supabase:types && tsc --noEmit",
+    "db:seed": "node --loader ts-node/esm --env-file=.env supabase/seed/runSeeds.js",
+    "db:reset": "supabase db reset --linked",
+    "supabase:types": "npx supabase gen types typescript --project-id $VITE_SUPABASE_PROJECT_REF --schema public > src/types/types.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.80.0",
@@ -22,6 +31,7 @@
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.1.0",
     "@tsconfig/node22": "^22.0.2",
     "@types/node": "^22.18.11",
     "@vitejs/plugin-vue": "^6.0.1",
@@ -33,6 +43,7 @@
     "jiti": "^2.6.1",
     "npm-run-all2": "^8.0.4",
     "prettier": "3.6.2",
+    "supabase": "^2.54.11",
     "typescript": "~5.9.0",
     "unplugin-vue-router": "^0.16.1",
     "vite": "^7.1.11",
